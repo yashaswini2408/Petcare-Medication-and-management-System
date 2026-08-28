@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+.pet-card {
+    background: white;
+    color: black;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    max-width: 900px;
+    margin: auto;
+}
+.pet-label {
+    font-weight: 600;
+    color: #444;
+}
+</style>
+
+<div class="pet-card mt-4">
+
+    <!-- Pet Image -->
+    {% if pet.image %}
+    <img src="{{ url_for('static', filename='product_images/' + pet.image) }}"
+         class="img-fluid rounded mb-3"
+         style="height: 350px; width: 100%; object-fit: cover;">
+    {% endif %}
+
+    <!-- Pet Details -->
+    <h2 class="fw-bold">{{ pet.name }}</h2>
+
+    <p><span class="pet-label">Species:</span> {{ pet.species }}</p>
+    <p><span class="pet-label">Age:</span> {{ pet.age }} years</p>
+    <p><span class="pet-label">Description:</span> {{ pet.description }}</p>
+    <a href="{{ url_for('main.view_medical', pet_id=pet.id) }}" class="btn btn-secondary mt-3"> View Medical History </a>
+    <!-- Status -->
+    <p><span class="pet-label">Status:</span>
+        {% if pet.status == 'adopted' %}
+            <span class="badge bg-danger">Adopted</span>
+        {% elif pet.status == 'pending' %}
+            <span class="badge bg-warning text-dark">Pending</span>
+        {% else %}
+            <span class="badge bg-success">Available</span>
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <!-- Adoption Button -->
+    {% if current_user.is_authenticated %}
+
+        {% if pet.status == 'available' %}
+    <form method="POST" action="{{ url_for('main.adopt', pet_id=pet.id) }}">
+        <button class="btn btn-primary">Request Adoption</button>
+    </form>
+
+{% elif pet.status == 'pending' %}
+    <div class="alert alert-warning mt-2">
+        Adoption request for this pet is <strong>Pending</strong>.
+    </div>
+
+{% else %}
+    <div class="alert alert-danger mt-2">
+        This pet has been <strong>Adopted</strong>.
+    </div>
+{% endif %}
+
+
+
+    {% else %}
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary w-100 btn-lg">
+            Login to Adopt
+        </a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="text-center mb-4">📊 Adopter Adoption Summary</h2>
+
+<style>
+    .summary-table {
+        background: white;
+        color: black;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+    }
+</style>
+
+<div class="summary-table">
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Adopter ID</th>
+            <th>Adopter Name</th>
+            <th>Total Adoptions</th>
+            <th>Pet Names</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in summary %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.adopter_name }}</td>
+            <td>{{ row.total_adoptions }}</td>
+            <td>{{ row.pet_names }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

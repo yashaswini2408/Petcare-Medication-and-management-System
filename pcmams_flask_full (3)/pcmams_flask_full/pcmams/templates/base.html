@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PCMAMS - Pet Care Medication & Adoption Management System</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/a2e0e6ad54.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .fade-page {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .flash-message {
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .flash-message.success { background: #c8f7c5; color: #205c20; }
+        .flash-message.danger { background: #ffcccc; color: #b30000; }
+        .flash-message.warning { background: #fff3cd; color: #664d03; }
+
+        .content-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            margin-top: 40px;
+            color: white;
+        }
+
+        .footer-section {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-section p {
+            margin: 0;
+            color: #f1f1f1;
+            font-size: 0.9rem;
+        }
+
+        /* Navbar styles */
+        .nav-link-custom {
+            color: #ffffff !important;
+            font-weight: 500;
+            padding: 10px 14px;
+            border-radius: 12px;
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link-custom:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .nav-link-custom::after {
+            content: "";
+            width: 0%;
+            height: 2px;
+            background: #fff;
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: 0.3s ease;
+        }
+
+        .nav-link-custom:hover::after {
+            width: 60%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- 🌟 BLUE GLASS NAVBAR -->
+<nav class="navbar navbar-expand-lg px-4"
+     style="backdrop-filter: blur(12px);
+            background: rgba(32, 18, 85, 0.723);
+            border-bottom: 1px solid rgba(255,255,255,0.3);">
+
+    <div class="container">
+
+        {% set is_welcome = request.endpoint == 'main.home' %}
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold text-white" href="{{ url_for('main.home') }}"
+           style="font-size: 1.6rem;">
+            🐾 PCMAMS
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                {% if current_user.is_authenticated and current_user.role == 'admin' and not is_welcome %}
+<li class="nav-item mx-2">
+    <a class="nav-link nav-link-custom" href="{{ url_for('main.view_adoption_summary') }}">
+        <i class="fas fa-chart-bar"></i> Adoption Summary
+    </a>
+</li>
+{% endif %}
+
+                {% if not is_welcome %}
+                <li class="nav-item mx-2">
+        <a class="nav-link nav-link-custom" href="javascript:history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </li>
+                <!-- Home -->
+
+                <li class="nav-item mx-2">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('main.home') }}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                {% endif %}
+
+                {% if current_user.is_authenticated and not is_welcome %}
+                <!-- Dashboard -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('main.dashboard') }}">
+                        <i class="fas fa-th-large"></i> Dashboard
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if current_user.is_authenticated and not is_welcome %}
+                <!-- Logout -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('auth.logout') }}">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if not current_user.is_authenticated and not is_welcome %}
+                <!-- Login -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('auth.login') }}">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </li>
+
+                <!-- Register -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('auth.register') }}">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- 🌟 MAIN CONTENT AREA -->
+<div class="container fade-page">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mt-3">
+                {% for cat, msg in messages %}
+                    <div class="flash-message {{ cat }}">{{ msg }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="content-box mt-3">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+
+<!-- 🌟 FOOTER -->
+<footer class="footer-section mt-4">
+    <p>© {{ current_year }} PCMAMS — All Rights Reserved.</p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

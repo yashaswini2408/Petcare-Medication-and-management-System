@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4">Add Medical Record for {{ pet.name }}</h2>
+
+<form method="POST" class="card p-4 shadow">
+
+    <!-- Treatment -->
+    <label class="form-label">Treatment:</label>
+    <input type="text" name="treatment" class="form-control" required>
+
+    <!-- Diagnosis -->
+    <label class="form-label mt-3">Diagnosis:</label>
+    <input type="text" name="diagnosis" class="form-control" required>
+
+    <!-- Medicine selection -->
+    <label class="form-label mt-3">Medicine Used:</label>
+
+    <select name="medicine_id" class="form-control" required>
+        <option value="">Select Medicine</option>
+
+        {% for med in medicines %}
+            <option value="{{ med.med_id }}"
+                {% if med.stock == 0 %}
+                    disabled style="color: red;"
+                {% endif %}
+            >
+                {{ med.name }}
+                {% if med.stock == 0 %}
+                    (Out of Stock)
+                {% else %}
+                    (Stock: {{ med.stock }})
+                {% endif %}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Visit date -->
+    <label class="form-label mt-3">Visit Date:</label>
+    <input type="date" name="visit_date" class="form-control" required>
+
+    <!-- Notes -->
+    <label class="form-label mt-3">Notes:</label>
+    <textarea name="notes" class="form-control" rows="3"></textarea>
+
+    <button class="btn btn-success mt-4">Add Record</button>
+</form>
+
+{% endblock %}

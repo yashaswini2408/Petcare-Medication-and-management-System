@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Medicines Inventory</h2>
+
+<a href="{{ url_for('main.add_medicine') }}" class="btn btn-success mb-3">
+  Add Medicine
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Description</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for med in medicines %}
+        <tr>
+            <td>{{ med.med_id }}</td>
+            <td>{{ med.name }}</td>
+
+            <!-- Editable Stock -->
+            <td>
+                <form action="{{ url_for('main.update_stock', med_id=med.med_id) }}" method="POST" class="d-flex">
+                    <input type="number" name="stock" class="form-control"
+                        value="{{ med.stock }}" min="0" style="width:80px;">
+
+                    <button class="btn btn-primary btn-sm ms-2">Save</button>
+                </form>
+            </td>
+
+            <td>{{ med.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .adoption-card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    thead {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+    }
+
+    th, td {
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="page-title">📋 Adoption Requests</h2>
+
+    <div class="adoption-card">
+
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adopter</th>
+                    <th>Pet</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for a in adoptions %}
+                <tr>
+                    <td>{{ a.id }}</td>
+                    <td>{{ a.user.username }}</td>
+                    <td>{{ a.pet.name }}</td>
+
+                    <td>
+                        {% if a.status == 'approved' %}
+                            <span class="badge bg-success">Approved</span>
+                        {% elif a.status == 'rejected' %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ a.adopted_on.strftime('%Y-%m-%d') }}</td>
+
+                    <td>
+                        {% if a.status != 'approved' %}
+                        <a href="{{ url_for('main.approve_adoption', adoption_id=a.id) }}"
+                           class="btn btn-success btn-sm">Approve</a>
+                        {% endif %}
+
+                        {% if a.status != 'rejected' %}
+                        <a href="{{ url_for('main.reject_adoption', adoption_id=a.id) }}"
+                           class="btn btn-danger btn-sm">Reject</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Medical Records for {{ pet.name }}</h2>
+
+<!-- ADD MEDICAL RECORD BUTTON -->
+{% if current_user.role in ['admin', 'vet'] %}
+<a href="{{ url_for('main.add_medical', pet_id=pet.id) }}"
+   class="btn btn-success mb-3">Add Medical Record</a>
+{% endif %}
+
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Treatment</th>
+            <th>Diagnosis</th>
+            <th>Medication</th>
+            <th>Visit Date</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for record in medical_records %}
+    <tr>
+        <td>{{ record.treatment }}</td>
+        <td>{{ record.diagnosis }}</td>
+        <td>{{ record.medicine.name if record.medicine else '' }}</td>
+        <td>{{ record.visit_date }}</td>
+        <td>{{ record.notes }}</td>
+
+        <!-- ACTION BUTTONS (ADMIN + VET ONLY) -->
+        <td>
+            {% if current_user.role in ['admin', 'vet'] %}
+                <a href="{{ url_for('main.edit_medical', record_id=record.record_id) }}"
+                class="btn btn-warning btn-sm">Edit</a>
+
+                <a href="{{ url_for('main.delete_medical', record_id=record.record_id) }}"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Delete this record?')">Delete</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+</table>
+
+{% endblock %}

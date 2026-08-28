@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Edit Medical Record</h2>
+
+<form method="POST">
+
+  <label>Treatment:</label>
+  <input class="form-control" name="treatment" value="{{ record.treatment }}" required>
+
+  <label>Diagnosis:</label>
+  <input class="form-control" name="diagnosis" value="{{ record.diagnosis }}" required>
+
+  <label>Medication:</label>
+  <input class="form-control" name="medication" value="{{ record.medication }}">
+
+  <label>Visit Date:</label>
+  <input type="date" class="form-control" name="visit_date" value="{{ record.visit_date }}" required>
+
+  <label>Notes:</label>
+  <textarea class="form-control" name="notes">{{ record.notes }}</textarea>
+
+  <button class="btn btn-primary mt-3">Save Changes</button>
+</form>
+
+{% endblock %}

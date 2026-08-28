@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Add New Medicine</h2>
+
+<form method="POST">
+
+    <label>Medicine Name:</label>
+    <input type="text" class="form-control" name="name" required>
+
+    <label>Stock:</label>
+    <input type="number" class="form-control" name="stock" required>
+
+    <label>Description:</label>
+    <textarea class="form-control" name="description"></textarea>
+
+    <button class="btn btn-primary mt-3">Add Medicine</button>
+
+</form>
+
+{% endblock %}

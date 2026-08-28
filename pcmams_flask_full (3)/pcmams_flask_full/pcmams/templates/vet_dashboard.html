@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .dashboard-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card {
+        border-radius: 15px;
+        padding: 25px;
+        background: white;
+        box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+        transition: 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    .card-link {
+        margin-top: 10px;
+        display: inline-block;
+        font-weight: bold;
+        color: #2575fc;
+        text-decoration: none;
+    }
+
+    .card-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="dashboard-title">🐾 Veterinarian Dashboard</h2>
+    <p class="text-muted mb-4">Manage pet health, treatments, and medical histories</p>
+
+    <div class="row g-4">
+
+        <!-- View All Pets -->
+        <div class="col-md-4">
+            <div class="dashboard-card text-center">
+                <div class="icon-box">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="card-title">View Pets</div>
+                <p>Check all registered pets and their health status.</p>
+                <a href="#" class="card-link">Open</a>
+            </div>
+        </div>
+
+        <!-- Add Medical Record -->
+        <div class="col-md-4">
+            <div class="dashboard-card text-center">
+                <div class="icon-box">
+                    <i class="fas fa-notes-medical"></i>
+                </div>
+                <div class="card-title">Medical Records</div>
+                <p>Update and maintain pet medical history.</p>
+                <a href="#" class="card-link">Manage</a>
+            </div>
+        </div>
+
+        <!-- Pending Medical Requests -->
+        <div class="col-md-4">
+            <div class="dashboard-card text-center">
+                <div class="icon-box">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <div class="card-title">Health Checkups</div>
+                <p>Review scheduled veterinary checkups.</p>
+                <a href="#" class="card-link">View</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FontAwesome Icons -->
+<script src="https://kit.fontawesome.com/a2e0e6ad54.js" crossorigin="anonymous"></script>
+
+{% endblock %}

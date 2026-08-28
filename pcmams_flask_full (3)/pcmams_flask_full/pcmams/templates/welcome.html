@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white !important;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .welcome-box {
+        max-width: 700px;
+        margin: auto;
+        margin-top: 120px;
+        text-align: center;
+        padding: 40px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 25px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .welcome-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.2rem;
+        color: #fdfdfd;
+        margin-bottom: 30px;
+    }
+
+    .btn-lg-custom {
+        padding: 12px 28px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .btn-login {
+        background: #ffffff;
+        color: #2575fc;
+        border: none;
+    }
+
+    .btn-login:hover {
+        background: #e6e6e6;
+        transform: translateY(-3px);
+    }
+
+    .btn-start {
+        background: #00d977;
+        color: white;
+        border: none;
+    }
+
+    .btn-start:hover {
+        background: #00c06a;
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="welcome-box">
+    
+    <h1 class="welcome-title">🐾 Welcome to PCMAMS</h1>
+    <p class="welcome-subtitle">
+        Pet Care Medication & Adoption Management System
+    </p>
+
+    <a href="{{ url_for('auth.login') }}" class="btn btn-lg-custom btn-login me-2">
+        Login
+    </a>
+
+   
+
+</div>
+
+{% endblock %}

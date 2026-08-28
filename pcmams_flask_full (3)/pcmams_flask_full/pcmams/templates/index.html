@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .filter-box {
+        background: white;
+        padding: 18px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+    }
+
+    .pet-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s ease;
+        box-shadow: 0 6px 22px rgba(0,0,0,0.1);
+    }
+
+    .pet-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .pet-card img {
+        border-bottom: 3px solid #eee;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+    }
+
+    .pagination-btn {
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .pagination-btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .btn-view {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        border: none;
+        color: white;
+        font-weight: 600;
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px 0;
+    }
+
+    .btn-view:hover {
+        background: linear-gradient(45deg, #5a0fbf, #1f63d6);
+    }
+</style>
+
+<h2 class="page-title">🐾 Available Pets for Adoption</h2>
+
+<!-- Filter + Search Section -->
+<div class="filter-box">
+    <form method="GET" class="row g-3">
+
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="search"
+                   placeholder="🔍 Search by name..."
+                   value="{{ request.args.get('search','') }}">
+        </div>
+
+        <div class="col-md-4">
+            <select name="species" class="form-select">
+                <option value="">All Categories</option>
+                <option value="Dog">Dogs</option>
+                <option value="Cat">Cats</option>
+                <option value="Bird">Birds</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <button class="btn btn-primary w-100" style="border-radius: 10px;">
+                Apply Filters
+            </button>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- PET LIST -->
+<div class="row">
+    {% for pet in pets.items %}
+    <div class="col-md-4 mb-4">
+        <div class="card pet-card">
+
+            {% if pet.image %}
+            <img src="{{ url_for('static', filename='product_images/' + pet.image) }}"
+                 class="card-img-top"
+                 height="210"
+                 style="object-fit: cover;">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ pet.name }}</h5>
+                <p class="card-text text-muted">
+                    {{ pet.species }} • {{ pet.age }} years old
+                </p>
+
+                <!-- STATUS BADGES -->
+                <p>Status:
+                    {% if pet.status == 'adopted' %}
+                        <span class="badge bg-danger">Adopted</span>
+
+                    {% elif pet.status == 'pending' %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+
+                    {% else %}
+                        <span class="badge bg-success">Available</span>
+                    {% endif %}
+                </p>
+
+                <a href="{{ url_for('main.pet_detail', pet_id=pet.id) }}"
+                   class="btn-view">
+                   View Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<!-- PAGINATION -->
+<div class="mt-4 text-center">
+
+    {% if pets.has_prev %}
+        <a class="btn btn-secondary pagination-btn"
+           href="?page={{ pets.prev_num }}">&laquo; Previous</a>
+    {% endif %}
+
+    {% if pets.has_next %}
+        <a class="btn btn-secondary pagination-btn"
+           href="?page={{ pets.next_num }}">Next &raquo;</a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

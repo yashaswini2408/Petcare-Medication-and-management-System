@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Pet Medical Summary</h2>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Pet ID</th>
+            <th>Name</th>
+            <th>Species</th>
+            <th>Age</th>
+            <th>Status</th>
+            <th>Total Visits</th>
+            <th>Last Visit</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in summary %}
+        <tr>
+            <td>{{ row.pet_id }}</td>
+            <td>{{ row.pet_name }}</td>
+            <td>{{ row.species }}</td>
+            <td>{{ row.age }}</td>
+            <td>{{ row.adoption_status }}</td>
+            <td>{{ row.total_visits }}</td>
+            <td>{{ row.last_visit or 'No Visits Yet' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

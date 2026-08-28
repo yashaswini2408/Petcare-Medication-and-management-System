@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: #f4f7fb;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .dashboard-title {
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: #2b2b2b;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-subtitle {
+        text-align: center;
+        color: #555;
+        margin-bottom: 35px;
+    }
+
+    .admin-card {
+        background: white;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0px 8px 25px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+        height: 100%;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .admin-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0px 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .icon-box {
+        width: 70px;
+        height: 70px;
+        border-radius: 15px;
+        background: linear-gradient(45deg,#6a11cb,#2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 32px;
+        margin: 0 auto 15px auto;
+    }
+
+    .admin-card .title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .admin-card p {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+
+    .admin-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #2575fc;
+        color: white;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .admin-btn:hover {
+        background: #125adf;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h2 class="dashboard-title">⚙️ Admin Dashboard</h2>
+    <p class="dashboard-subtitle">Manage pets, users, and adoption requests</p>
+
+    <div class="row g-4">
+
+        <!-- Add Pet -->
+        <div class="col-md-4">
+            <div class="admin-card">
+                <div class="icon-box"><i class="fas fa-plus"></i></div>
+                <div class="title">Add Pet</div>
+                <p>Add a new pet to the adoption system.</p>
+                <a href="{{ url_for('main.add_pet') }}" class="admin-btn">Add</a>
+            </div>
+        </div>
+
+        <!-- View Pets -->
+        <div class="col-md-4">
+            <div class="admin-card">
+                <div class="icon-box"><i class="fas fa-paw"></i></div>
+                <div class="title">View Pets</div>
+                <p>View, edit, or delete all registered pets.</p>
+                <a href="{{ url_for('main.view_pets') }}" class="admin-btn">Open</a>
+            </div>
+        </div>
+
+        <!-- View Adoptions -->
+        <div class="col-md-4">
+            <div class="admin-card">
+                <div class="icon-box"><i class="fas fa-heart"></i></div>
+                <div class="title">Adoption Requests</div>
+                <p>Approve or reject adoption requests.</p>
+                <a href="{{ url_for('main.view_adoptions') }}" class="admin-btn">View</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="admin-card">
+                <div class="icon-box"><i class="fas fa-heart"></i></div>
+                <div class="title">Medicines</div>
+                <p>See and manage stock.</p>
+                <a href="{{ url_for('main.view_medicines') }}" 
+   class="admin-btn">View</a>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="admin-card">
+                <div class="icon-box"><i class="fas fa-heart"></i></div>
+                <div class="title">View Pet Medical Summary</div>
+                <p>Approve or reject adoption requests.</p>
+                <a href="{{ url_for('main.view_pet_summary') }}" class="admin-btn">View</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a2e0e6ad54.js" crossorigin="anonymous"></script>
+
+{% endblock %}
